@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const router = require("./router.js");
 
 //Mongo DB call
 const db = require("./server").db();
@@ -18,5 +19,7 @@ app.set("views", "views");
 app.set("view engine", "ejs");
 
 // 4. Routing map
+
+app.use("/", router);
 
 module.exports = app;
