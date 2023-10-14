@@ -4,8 +4,8 @@ const path = require("path");
 const router = require("./router.js");
 
 //Mongo DB call
-const db = require("./server").db();
-const mongodb = require("mongodb");
+// const db = require("./server").db();
+// const mongodb = require("mongodb");
 
 // 1. Kirish codelari
 app.use(express.static(path.join(__dirname, "public")));
