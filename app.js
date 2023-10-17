@@ -20,6 +20,7 @@ app.set("view engine", "ejs");
 
 // 4. Routing map
 
+// app.use("/resto", router_bssr);
 app.use("/", router);
 
 module.exports = app;
