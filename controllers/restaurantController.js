@@ -28,6 +28,7 @@ restaurantController.signupProcess = async (req, res) => {
 
     // res.send("done");
     res.json({ state: "success", data: new_member });
+    // Session auth
   } catch (err) {
     console.log(`ERROR, cont/signup`);
     res.json({ state: "fail", message: err.message });

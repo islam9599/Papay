@@ -14,6 +14,8 @@ class Member {
       const new_member = new this.memberModel(input);
       //   let result;
 
+      //TODO: Authenticate based on JWT
+
       try {
         const result = await new_member.save();
         result.mb_password = "";
@@ -21,7 +23,7 @@ class Member {
         return result;
       } catch (mongo_err) {
         console.log(mongo_err);
-        throw new ERROR(Definer.auth_err1);
+        throw new Error(Definer.auth_err1);
       }
 
       //   const result = await new_member.save();
