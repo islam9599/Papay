@@ -103,4 +103,4 @@ productSchema.index(
   { unique: true }
 );
 
-module.exports = mongoose.model("Product", memberSchema);
+module.exports = mongoose.model("Product", productSchema);
