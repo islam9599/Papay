@@ -10,8 +10,9 @@ const uploaderProduct = require("./utils/upload-multer")("products");
 
 // Memberga dahldor routers
 // router.get("/", memberController.home);
+router_bssr.get("/", restaurantController.home);
 router_bssr
-  .get("/signup", restaurantController.getSignupMyRestaurant)
+  .get("/sign-up", restaurantController.getSignupMyRestaurant)
   .post("/signup", restaurantController.signupProcess);
 
 router_bssr
@@ -21,7 +22,7 @@ router_bssr
 router_bssr.get("/logout", restaurantController.logout);
 router_bssr.get("/check-me", restaurantController.checkSessions);
 
-router_bssr.get("/products/menu", restaurantController.getMyRestaurantData);
+router_bssr.get("/products/menu", restaurantController.getMyRestaurantProducts);
 router_bssr.post(
   "/products/create",
   uploaderProduct.array("product_images", 5),
