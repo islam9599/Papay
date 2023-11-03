@@ -22,12 +22,13 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
     // TODO: Get my restaurant products
 
     const product = new Product();
-    const data = product.getAllProductsDataResto(res.locals.member);
+    const data = await product.getAllProductsDataResto(res.locals.member);
     // const data = await res.render("restaurant-menu");
+    // console.log(data); // It return all products in an array
     res.render("restaurant-menu", { restaurant_data: data });
   } catch (err) {
     console.log(`ERROR, cont/getMyRestaurantProducts, ${err.message}`);
-    res.json({ state: "fail", message: err.message });
+    res.redirect("/resto");
   }
 };
 
@@ -70,7 +71,7 @@ restaurantController.signupProcess = async (req, res) => {
     // res.json({ state: "success", data: new_member });
   } catch (err) {
     console.log(`ERROR, cont/signupProcess`);
-    res.json({ state: "fail", message: err.message });
+    res.redirect("/resto");
   }
 };
 
@@ -93,7 +94,8 @@ restaurantController.loginProcess = async (req, res) => {
       // console.log(`body:::`, req.body);
       member = new Member(),
       result = await member.loginData(data);
-
+    // console.log(result);
+    // console.log(req.session.member);
     req.session.member = result;
     req.session.save(function () {
       res.mb_type === "ADMIN"
@@ -105,12 +107,19 @@ restaurantController.loginProcess = async (req, res) => {
     // res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR, cont/loginProcess`);
-    res.json({ state: "fail", message: err.message });
+    res.redirect("/resto");
   }
 };
 restaurantController.logout = (req, res) => {
-  console.log("GET cont.logout");
-  res.send("Logout sahifadasiz");
+  try {
+    console.log("GET cont.logout");
+    req.session.destroy(function () {
+      res.redirect("/resto");
+    });
+  } catch (err) {
+    console.log(`ERROR, cont/logout`);
+    res.json({ state: "fail", message: err.message });
+  }
 };
 
 restaurantController.validateAuthRestaurant = (req, res, next) => {

@@ -37,7 +37,7 @@ memberController.login = async (req, res) => {
     res.json({ state: "succeed", data: result });
   } catch (err) {
     console.log(`ERROR, cont/login`);
-    res.json({ state: "fail", message: err.message });
+    res.redirect("/resto");
   }
 };
 memberController.logout = (req, res) => {
