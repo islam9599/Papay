@@ -315,14 +315,17 @@
 
       $(".new_product_status").on("change", async function(e) {
         const id = e.target.id;
+        console.log(id);
         const product_status = $(`#${id}.new_product_status`).val();
         const mb_id = ` <%= member._id %> `;
 
         try{
           const url = `/resto/products/edit/${id}`;
+          console.log(url);
           const response = await axios.post(url, {id: id, product_status: product_status});
+          console.log("response", response);
           const result = response.data;
-          console.log(result);
+          // console.log(result);
 
           if(result.state == "success") {
             alert("success");

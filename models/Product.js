@@ -25,7 +25,7 @@ class Product {
   async addNewProductData(data, member) {
     try {
       data.restaurant_mb_id = shapeIntoMongooseObjectId(member._id);
-      console.log(data);
+      // console.log(data);
 
       const new_product = new this.productModel(data);
       const result = await new_product.save();

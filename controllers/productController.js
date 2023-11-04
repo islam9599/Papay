@@ -29,7 +29,7 @@ productController.addNewProduct = async (req, res) => {
     // console.log(data);
 
     const result = await product.addNewProductData(data, req.member);
-    // assert.ok(result, Definer.product_err1);
+    assert.ok(result, Definer.product_err1);
 
     // console.log(req.member);
 
