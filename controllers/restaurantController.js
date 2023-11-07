@@ -2,6 +2,7 @@ const assert = require("assert");
 const Member = require("../models/Member");
 const Product = require("../models/Product");
 const Definer = require("../lib/mistake");
+const Restaurant = require("../models/Restaurant");
 
 let restaurantController = module.exports;
 
@@ -151,6 +152,8 @@ restaurantController.checkSessions = (req, res) => {
 restaurantController.validateAdmin = (req, res, next) => {
   if (req.session?.member?.mb_type === "ADMIN") {
     req.member = req.session.member;
+
+    console.log(req.member);
     next();
   } else {
     const html = `<script>
@@ -161,15 +164,36 @@ restaurantController.validateAdmin = (req, res, next) => {
   }
 };
 
-restaurantController.getAllRestaurants = (req, res) => {
+restaurantController.getAllRestaurants = async (req, res) => {
   try {
     console.log("GET cont/getAllRestaurants");
 
-    //Todo hamma restaurantlarni db dan chaqiramiz
+    const restaurant = new Restaurant();
 
-    res.render("all-restaurants");
+    const restaurants_data = await restaurant.getAllRestaurantsData();
+
+    // console.log("restaurant_data:", restaurants_data);
+
+    res.render("all-restaurants", { restaurants_data: restaurants_data });
   } catch (err) {
     console.log(`ERROR, cont/getAllRestaurants`);
+    res.json({ state: "fail", message: err.message });
+  }
+};
+
+restaurantController.updateRestaurantByAdmin = async (req, res) => {
+  try {
+    console.log("POST cont/updateRestaurantByAdmin");
+
+    const restaurant = new Restaurant();
+
+    const result = await restaurant.updateRestaurantByAdminData(req.body);
+
+    // console.log(result);
+
+    await res.json({ state: "success", data: result });
+  } catch (err) {
+    console.log("ERROR, cont/updateRestaurantByAdmin");
     res.json({ state: "fail", message: err.message });
   }
 };

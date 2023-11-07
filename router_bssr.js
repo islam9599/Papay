@@ -60,6 +60,11 @@ router_bssr.get(
   restaurantController.validateAdmin,
   restaurantController.getAllRestaurants
 );
+router_bssr.post(
+  "/all-restaurant/edit",
+  restaurantController.validateAdmin,
+  restaurantController.updateRestaurantByAdmin
+);
 
 // router.get("/", function (req, res) {
 //   res.send("Home sahifadasiz");
