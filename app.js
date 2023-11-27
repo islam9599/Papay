@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const router = require("./router.js");
 const router_bssr = require("./router_bssr.js");
+const cookieParser = require("cookie-parser");
 
 // const db = require("./server").db();
 // const mongodb = require("mongodb");
@@ -19,6 +20,7 @@ const store = new MongoDBStore({
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // 2. Session codelari
 app.use(

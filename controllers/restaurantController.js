@@ -130,7 +130,7 @@ restaurantController.logout = (req, res) => {
 restaurantController.validateAuthRestaurant = (req, res, next) => {
   if (req.session?.member?.mb_type === "RESTAURANT") {
     req.member = req.session.member;
-    console.log(req.member);
+    // console.log(req.member);
     next();
   } else {
     const html = `<script>
@@ -154,6 +154,7 @@ restaurantController.validateAdmin = (req, res, next) => {
     req.member = req.session.member;
 
     console.log(req.member);
+
     next();
   } else {
     const html = `<script>

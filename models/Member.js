@@ -12,12 +12,10 @@ class Member {
       const salt = await bcrypt.genSalt();
       input.mb_password = await bcrypt.hash(input.mb_password, salt);
       const new_member = new this.memberModel(input);
-      //   let result;
 
-      //TODO: Authenticate based on JWT
-
+      let result;
       try {
-        const result = await new_member.save();
+        result = await new_member.save();
         result.mb_password = "";
         console.log(result);
         return result;
