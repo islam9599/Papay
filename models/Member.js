@@ -88,7 +88,7 @@ class Member {
       view_ref_id = shapeIntoMongooseObjectId(view_ref_id);
       const mb_id = shapeIntoMongooseObjectId(member._id);
 
-      const view = await new View(mb_id);
+      const view = new View(mb_id);
 
       //Validation needed
       const isValid = await view.validateChosenTarget(view_ref_id, group_type);
