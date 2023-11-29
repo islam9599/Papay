@@ -36,7 +36,7 @@ app.use(
 );
 app.use(function (req, res, next) {
   res.locals.member = req.session.member;
-  console.log(res.locals.member);
+  // console.log(res.locals.member);
   next();
 });
 // 3. Views codelari
