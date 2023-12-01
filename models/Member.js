@@ -32,13 +32,6 @@ class Member {
     }
   }
 
-  //   async saveNewMemberData() {
-  //     try{
-  //         await
-  //     }catch(err){
-
-  //     }
-  //   }
   async loginData(input) {
     try {
       const member = await this.memberModel
