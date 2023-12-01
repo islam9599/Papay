@@ -42,9 +42,9 @@ memberController.login = async (req, res) => {
     const member = new Member();
     const result = await member.loginData(data);
 
-    console.log("result:", result);
+    // console.log("result:", result);
     const token = memberController.createToken(result);
-    console.log("token::::", token);
+    // console.log("token::::", token);
     res.cookie("access_token", token, {
       maxAge: 6 * 3600 * 1000,
       httpOnly: true,

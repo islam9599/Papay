@@ -1,13 +1,14 @@
 const assert = require("assert");
-const memberModel = require("../schema/member.model");
+const MemberModel = require("../schema/member.model");
+const ProductModel = require("../schema/product.model");
 const ViewModel = require("../schema/view.model");
 const Definer = require("../lib/mistake");
-const { exec } = require("child_process");
 
 class View {
   constructor(mb_id) {
     this.viewModel = ViewModel;
-    this.memberModel = memberModel;
+    this.memberModel = MemberModel;
+    this.productModel = ProductModel;
     this.mb_id = mb_id;
   }
 
@@ -20,6 +21,14 @@ class View {
             .findById({
               _id: view_ref_id,
               mb_status: "ACTIVE",
+            })
+            .exec();
+          break;
+        case "product":
+          result = await this.productModel
+            .findById({
+              _id: view_ref_id,
+              mb_status: "PROCESS",
             })
             .exec();
           break;
@@ -61,6 +70,16 @@ class View {
             )
             .exec();
           break;
+        case "product":
+          await this.productModel
+            .findByIdAndUpdate(
+              {
+                _id: view_ref_id,
+              },
+              { $inc: { product_views: 1 } }
+            )
+            .exec();
+          break;
       }
       return true;
     } catch (err) {
@@ -75,7 +94,7 @@ class View {
           view_ref_id: view_ref_id,
         })
         .exec();
-      console.log("view::::", view);
+      //   console.log("view::::", view);
       //   return view ? true : false;
       return !!view;
     } catch (err) {

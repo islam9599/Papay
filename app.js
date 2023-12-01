@@ -21,6 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+// console.log("cookieParser:::::", cookieParser);
 
 // 2. Session codelari
 app.use(
