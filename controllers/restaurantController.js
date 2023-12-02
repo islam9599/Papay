@@ -3,6 +3,7 @@ const Member = require("../models/Member");
 const Product = require("../models/Product");
 const Definer = require("../lib/mistake");
 const Restaurant = require("../models/Restaurant");
+const { param } = require("../router");
 
 let restaurantController = module.exports;
 
@@ -17,6 +18,19 @@ restaurantController.getRestaurants = async (req, res) => {
     res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR, cont/getRestaurants, ${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
+};
+
+restaurantController.getChosenRestaurant = async (req, res) => {
+  try {
+    console.log("GET: cont/getChosenRestaurant");
+    const id = req.params.id;
+    const restaurant = new Restaurant();
+    const result = await restaurant.getChosenRestaurantData(req.member, id);
+    res.json({ state: "success", data: result });
+  } catch (err) {
+    console.log(`ERROR, cont/getChosenRestaurant, ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
 };

@@ -49,7 +49,7 @@ class Product {
 
       if (member) {
         const member_object = new Member();
-        member_object.viewChosenItemByMember(member, id, "product");
+        await member_object.viewChosenItemByMember(member, id, "product");
       }
 
       const result = await this.productModel
