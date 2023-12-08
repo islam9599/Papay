@@ -3,7 +3,7 @@ const {
   board_id_enum_list,
   board_article_status_enum_list,
 } = require("../lib/config");
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const boArticleSchema = new mongoose.Schema(
   {
@@ -25,7 +25,7 @@ const boArticleSchema = new mongoose.Schema(
     },
     art_like: { type: Number, required: false, default: 0 },
     art_views: { type: Number, required: true, default: 0 },
-    mb_id: { type: schema.Types.ObjectId, ref: "Member", required: true },
+    mb_id: { type: Schema.Types.ObjectId, ref: "Member", required: true },
   },
   { timestamps: { createdAt: true } }
 );
