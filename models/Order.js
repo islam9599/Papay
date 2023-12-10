@@ -62,6 +62,8 @@ class Order {
       const pro_list = data.map(async (item) => {
         return await this.saveItemsOrderData(item, order_id);
       });
+      console.log("pro_list", pro_list);
+
       const results = await Promise.all(pro_list);
       console.log(results);
       return true;
