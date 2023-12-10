@@ -5,6 +5,7 @@ const {
   shapeIntoMongooseObjectId,
   board_id_enum_list,
 } = require("../lib/config");
+const Member = require("./Member");
 
 class Community {
   constructor(mb_id) {
@@ -102,7 +103,28 @@ class Community {
           //Todo: check auth member likes the chosen target
         ])
         .exec();
-      console.log("result:::", result);
+      assert.ok(result, Definer.article_err3);
+
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async getChosenArticleData(member, art_id) {
+    try {
+      art_id = shapeIntoMongooseObjectId(art_id);
+
+      if (member) {
+        const member_object = new Member();
+        await member_object.viewChosenItemByMember(member, art_id, "community");
+      }
+
+      const result = await this.boArticleModel
+        .findById({
+          _id: art_id,
+        })
+        .exec();
       assert.ok(result, Definer.article_err3);
       return result;
     } catch (err) {
