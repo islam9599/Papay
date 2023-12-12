@@ -150,7 +150,7 @@ class Follow {
 
       if (member && member._id === inquiry.mb_id) {
         console.log("Passed");
-        aggregateQuery.push(lookup_auth_member_following(follow_id));
+        aggregateQuery.push(lookup_auth_member_following(follow_id, "follows"));
       }
 
       const result = await this.followModel.aggregate(aggregateQuery).exec();

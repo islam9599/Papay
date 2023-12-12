@@ -2,7 +2,10 @@ const MemberModel = require("../schema/member.model");
 const Definer = require("../lib/mistake.js");
 const assert = require("assert");
 const bcrypt = require("bcryptjs");
-const { shapeIntoMongooseObjectId } = require("../lib/config");
+const {
+  shapeIntoMongooseObjectId,
+  lookup_auth_member_following,
+} = require("../lib/config");
 const View = require("./View");
 class Member {
   constructor() {
@@ -55,21 +58,25 @@ class Member {
   async getChosenMemberData(member, id) {
     try {
       id = shapeIntoMongooseObjectId(id);
+      const auth_member = shapeIntoMongooseObjectId(member?._id);
 
       console.log("member:::", member);
+
+      let aggregateQuery = [
+        { $match: { _id: id, mb_status: "ACTIVE" } },
+        { $unset: "mb_password" },
+      ];
 
       if (member) {
         //condition if not seen before
         await this.viewChosenItemByMember(member, id, "member");
+        // todo: check auth member liked the chosen member
+        aggregateQuery.push(
+          lookup_auth_member_following(auth_member, "members")
+        );
       }
 
-      const result = await this.memberModel
-        .aggregate([
-          { $match: { _id: id, mb_status: "ACTIVE" } },
-          { $unset: "mb_password" },
-          // todo: check auth member liked the chosen member
-        ])
-        .exec();
+      const result = await this.memberModel.aggregate(aggregateQuery).exec();
       assert.ok(result, Definer.general_err2);
       return result[0];
     } catch (err) {
@@ -86,6 +93,7 @@ class Member {
 
       //Validation needed
       const isValid = await view.validateChosenTarget(view_ref_id, group_type);
+      console.log("isValid:::", isValid);
       assert.ok(isValid, Definer.general_err2);
 
       //Logged user has been seen before

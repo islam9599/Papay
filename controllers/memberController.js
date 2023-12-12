@@ -102,7 +102,7 @@ memberController.getChosenMember = async (req, res) => {
 
     const member = new Member();
     const result = await member.getChosenMemberData(req.member, id);
-    console.log("result:::::", result);
+    // console.log("result:::::", result);
 
     res.json({ state: "success", data: result });
   } catch (err) {
