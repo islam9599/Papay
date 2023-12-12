@@ -9,11 +9,26 @@ followController.subscribe = async (req, res) => {
     assert.ok(req.member, Definer.auth_err5);
 
     const follow = new Follow();
-    const result = await follow.subscribeData(req.member, req.body);
+    await follow.subscribeData(req.member, req.body);
 
-    res.json({ state: "success", data: "result" });
+    res.json({ state: "success", data: "subscribed" });
   } catch (err) {
     console.log(`ERROR, cont/subscribe`);
+    res.json({ state: "fail", message: err.message });
+  }
+};
+followController.unsubscribe = async (req, res) => {
+  try {
+    console.log("POST, cont/subscribe");
+    assert.ok(req.member, Definer.auth_err5);
+
+    const follow = new Follow();
+    const result = await follow.unsubscribeData(req.member, req.body);
+    assert.ok(result, Definer.general_err1);
+
+    res.json({ state: "success", data: result });
+  } catch (err) {
+    console.log(`ERROR, cont/unsubcribed`);
     res.json({ state: "fail", message: err.message });
   }
 };
