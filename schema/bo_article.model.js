@@ -23,7 +23,7 @@ const boArticleSchema = new mongoose.Schema(
       enum: { values: board_article_status_enum_list },
       message: "{Value} is not among permitted values",
     },
-    art_like: { type: Number, required: false, default: 0 },
+    art_likes: { type: Number, required: false, default: 0 },
     art_views: { type: Number, required: true, default: 0 },
     mb_id: { type: Schema.Types.ObjectId, ref: "Member", required: true },
   },
