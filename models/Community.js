@@ -4,6 +4,7 @@ const Definer = require("../lib/mistake");
 const {
   shapeIntoMongooseObjectId,
   board_id_enum_list,
+  lookup_auth_member_liked,
 } = require("../lib/config");
 const Member = require("./Member");
 
@@ -37,7 +38,7 @@ class Community {
 
   async getMemberArticlesData(member, mb_id, inquiry) {
     try {
-      const auth_mb = shapeIntoMongooseObjectId(member?._id);
+      const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
       mb_id = shapeIntoMongooseObjectId(mb_id);
       const page = inquiry.page ? inquiry.page * 1 : 1;
       const limit = inquiry.limit ? inquiry.limit * 1 : 5;
@@ -58,7 +59,7 @@ class Community {
           {
             $unwind: "$member_data",
           },
-          //Todo: check auth member likes the chosen target
+          lookup_auth_member_liked(auth_mb_id),
         ])
         .exec();
       assert.ok(result, Definer.article_err2);
@@ -100,7 +101,7 @@ class Community {
           {
             $unwind: "$member_data",
           },
-          //Todo: check auth member likes the chosen target
+          lookup_auth_member_liked(auth_mb_id),
         ])
         .exec();
       assert.ok(result, Definer.article_err3);
