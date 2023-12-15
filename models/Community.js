@@ -31,7 +31,7 @@ class Community {
       return await article.save();
     } catch (mongo_err) {
       console.log("mongo_err:::", mongo_err);
-      throw new Error(Definer.auth_err1);
+      throw new Error(Definer.mongodb_validation_err);
     }
   }
 
