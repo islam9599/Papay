@@ -130,7 +130,7 @@ class Like {
               {
                 _id: like_ref_id,
               },
-              { $inc: { art_like: modifier } }
+              { $inc: { art_likes: modifier } }
             )
             .exec();
           break;
