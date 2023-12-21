@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const router = require("./router.js");
 const router_bssr = require("./router_bssr.js");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 // const db = require("./server").db();
@@ -18,8 +19,15 @@ const store = new MongoDBStore({
 
 // 1. Kirish codelari
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+  })
+);
 app.use(cookieParser());
 // console.log("cookieParser:::::", cookieParser);
 
