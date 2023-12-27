@@ -295,16 +295,16 @@
   </div>
   <script>
     $(function () {
-      $(".product_collection").on("change", () => {
-        const selected_value = $(".product_collection").val();
-        if (selected_value === "drink") {
-          $("#product_volume").show();
-          $("#product_size").hide();
-        } else {
-          $("#product_volume").hide();
-          $("#product_size").show();
-        }
-      });
+      // $(".product_collection").on("change", () => {
+      //   const selected_value = $(".product_collection").val();
+      //   if (selected_value === "drink") {
+      //     $("#product_volume").show();
+      //     $("#product_size").hide();
+      //   } else {
+      //     $("#product_volume").hide();
+      //     $("#product_size").show();
+      //   }
+      // });
 
       $(".hidding_btn").on("click", function () {
         $(".dish_container").slideToggle(500);
