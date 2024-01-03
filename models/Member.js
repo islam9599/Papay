@@ -31,8 +31,6 @@ class Member {
         console.log(mongo_err);
         throw new Error(Definer.mongodb_validation_err);
       }
-
-      //   const result = await new_member.save();
     } catch (err) {
       throw err;
     }
@@ -45,7 +43,6 @@ class Member {
         .exec();
 
       assert.ok(member, Definer.auth_err3);
-      //   console.log(member);
       const isMatch = await bcrypt.compare(
         input.mb_password,
         member.mb_password
@@ -53,7 +50,6 @@ class Member {
 
       assert.ok(isMatch, Definer.auth_err4);
       return await this.memberModel.findOne({ mb_nick: input.mb_nick }).exec();
-      //   console.log("member::::", member);
     } catch (err) {
       throw err;
     }
@@ -96,12 +92,10 @@ class Member {
 
       //Validation needed
       const isValid = await view.validateChosenTarget(view_ref_id, group_type);
-      console.log("isValid:::", isValid);
       assert.ok(isValid, Definer.general_err2);
 
       //Logged user has been seen before
       const doesExist = await view.checkViewExitence(view_ref_id);
-      console.log("doesExist::::", doesExist);
       if (!doesExist) {
         const result = await view.insertMemberView(view_ref_id, group_type);
         assert.ok(result, Definer.general_err1);
@@ -115,7 +109,6 @@ class Member {
     try {
       const mb_id = shapeIntoMongooseObjectId(member?._id);
       like_ref_id = shapeIntoMongooseObjectId(like_ref_id);
-      // group_type = shapeIntoMongooseObjectId(group_type);
 
       const like = new Like(mb_id);
       const isValid = await like.validateTargetItem(like_ref_id, group_type);
@@ -123,7 +116,6 @@ class Member {
       assert.ok(isValid, Definer.general_err2);
 
       const doesExist = await like.checkLikeExistence(like_ref_id);
-      console.log("doesExist:::::::", doesExist);
 
       let data = doesExist
         ? await like.removeMemberLike(like_ref_id, group_type)
@@ -135,6 +127,33 @@ class Member {
         like_ref_id: data.like_ref_id,
         like_status: doesExist ? 0 : 1,
       };
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async updateMemberData(id, data, image) {
+    try {
+      const mb_id = shapeIntoMongooseObjectId(id);
+      let params = {
+        mb_nick: data.mb_nick,
+        mb_phone: data.mb_phone,
+        mb_address: data.mb_address,
+        mb_description: data.mb_description,
+        mb_image: image ? image.path : null,
+      };
+
+      for (let prop in params) if (!params[prop]) delete params[prop];
+      const result = await this.memberModel
+        .findOneAndUpdate({ _id: mb_id }, params, {
+          runValidators: true,
+          lean: true,
+          returnDocument: "after",
+        })
+        .exec();
+      assert.ok(result, Definer.general_err1);
+
       return result;
     } catch (err) {
       throw err;
