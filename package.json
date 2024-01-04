@@ -25,6 +25,7 @@
     "mongodb": "^3.7.4",
     "mongoose": "^6.12.1",
     "multer": "^1.4.5-lts.1",
+    "socket.io": "^2.3.0",
     "uuid": "^9.0.1"
   }
 }

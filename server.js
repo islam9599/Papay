@@ -18,8 +18,7 @@ mongoose.connect(
       //   console.log(client);
       //   module.exports = client;
       //   console.log(goose);
-      const app = require("./app");
-      const server = htpp.createServer(app);
+      const server = require("./app");
       let PORT = process.env.PORT || 3003;
       server.listen(PORT, function () {
         console.log(
